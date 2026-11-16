@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "friendlyfire",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "Darkhax",
+    "JustHari01"
+  ],
+  "contributors": [
+    "Independent unofficial Fabric 1.21.1 port"
+  ],
+  "contact": {
+    "homepage": "${mod_homepage}",
+    "sources": "${mod_source}",
+    "issues": "${mod_issues}"
+  },
+  "icon": "logo.png",
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.darkhax.friendlyfire.FriendlyFireFabric"
+    ]
+  },
+  "mixins": [
+    "friendlyfire.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric": "*",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "bookshelf": ">=21.1.0"
+  }
+}

@@ -1,0 +1,66 @@
+plugins {
+    id 'fabric-loom' version '1.10.5'
+}
+
+group = 'net.darkhax.friendlyfire.port'
+version = "${mod_version}+${minecraft_version}"
+
+base {
+    archivesName = "FriendlyFire-Fabric-${minecraft_version}"
+}
+
+repositories {
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
+    maven {
+        name = 'TerraformersMC'
+        url = 'https://maven.terraformersmc.com/releases/'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+    modCompileOnly("net.fabricmc:fabric-loader:${fabric_loader_version}") {
+        transitive = false
+    }
+    modCompileOnly("net.darkhax.bookshelf:bookshelf-common-${minecraft_version}:${bookshelf_version}") {
+        transitive = false
+    }
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand(
+            version: project.version,
+            mod_name: project.mod_name,
+            mod_description: project.mod_description,
+            mod_homepage: project.mod_homepage,
+            mod_source: project.mod_source,
+            mod_issues: project.mod_issues,
+            mod_license: project.mod_license
+        )
+    }
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}
